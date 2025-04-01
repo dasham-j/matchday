@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 from playwright.sync_api import sync_playwright
 import random
 import re
-
+from playwright_stealth import stealth_sync
 app = Flask(__name__)
 
 USER_AGENTS = [
@@ -14,9 +14,10 @@ def get_match_details():
     url = "https://www.google.com/search?client=firefox-b-d&q=ipl"
     
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         context = browser.new_context(user_agent=random.choice(USER_AGENTS))
         page = context.new_page()
+        stealth_sync(page)
         page.goto(url)
         page.wait_for_load_state("domcontentloaded")
 
