@@ -14,7 +14,7 @@ def get_match_details():
     url = "https://www.google.com/search?client=firefox-b-d&q=ipl"
     
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         context = browser.new_context(user_agent=random.choice(USER_AGENTS))
         page = context.new_page()
         stealth_sync(page)
